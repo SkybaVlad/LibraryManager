@@ -16,3 +16,10 @@ class TestManager(unittest.TestCase):
         self.assertEqual(added_book.name,book_obj.name)
         self.assertEqual(added_book.quantity,book_obj.quantity)
 
+    def test_add_two_dublicate(self):
+        m = Manager()
+        book_obj = Book("HarryPotter",1)
+        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter",1)
+        m.add_book(book_obj.name,book_obj.quantity)
+        self.assertEqual(len(m.books),1)
