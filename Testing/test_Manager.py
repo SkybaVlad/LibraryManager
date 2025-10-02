@@ -1,5 +1,6 @@
 import unittest
 from Classes.Book import Book
+from Classes.User import User
 from Classes.Manager import Manager
 
 class TestManager(unittest.TestCase):
@@ -23,3 +24,8 @@ class TestManager(unittest.TestCase):
         book_obj = Book("HarryPotter",1)
         m.add_book(book_obj.name,book_obj.quantity)
         self.assertEqual(len(m.books),1)
+
+    def test_add_user(self):
+        m = Manager()
+        user_obj = User("John",3)
+        self.assertIn(user_obj,m.users)
