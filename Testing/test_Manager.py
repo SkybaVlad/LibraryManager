@@ -36,3 +36,11 @@ class TestManager(unittest.TestCase):
         user_obj = User("John",3)
         m.add_user(user_obj.name,user_obj.user_id)
         self.assertEqual(m.users[user_obj],None)
+
+    def test_search_book(self):
+        m = Manager()
+        book_obj = Book("HarryPotter",1)
+        m.add_book(book_obj.name,book_obj.quantity)
+        result = m.search_book("HarryPotter")
+        self.assertEqual(result.name,book_obj.name)
+        self.assertEqual(result.quantity,book_obj.quantity)
