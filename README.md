@@ -1,1 +1,1 @@
-# LibraryManager
+This is a Library Manager console program that provide wide range of functions like add books to library, search books in libary, manage all users that register in library, user can borrow books and also you can see all list of books or all users in library
