@@ -44,3 +44,19 @@ class TestManager(unittest.TestCase):
         result = m.search_book("HarryPotter")
         self.assertEqual(result.name,book_obj.name)
         self.assertEqual(result.quantity,book_obj.quantity)
+
+    def test_search_no_exist_book(self):
+        m = Manager()
+        book_obj = Book("HarryPotter",1)
+        m.add_book(book_obj.name,book_obj.quantity)
+        result = m.search_book("Ping")
+        self.assertEqual(None,None)
+
+    def test_borrow_book(self):
+        m = Manager()
+        user_obj = User("John",3)
+        m.add_user(user_obj.name,user_obj.user_id)
+        book_obj = Book("HarryPotter",1)
+        m.add_book(book_obj.name,book_obj.quantity)
+        m.borrow_book(user_obj.user_id,book_obj.name)
+        self.assertEqual(m.users[user_obj],book_obj.name)
