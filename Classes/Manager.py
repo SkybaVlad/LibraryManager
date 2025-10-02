@@ -1,5 +1,5 @@
-from Book import *
-from User import *
+from Classes.Book import *
+from Classes.User import *
 
 class Manager:
     def __init__(self):
