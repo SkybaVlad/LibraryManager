@@ -29,10 +29,12 @@ class Manager:
 
     def borrow_book(self,user_id,book_name):
         for user in self.users:
-            if user.id == user_id:
-                self.users[user] = book_name
-                return "Book was borrowed"
-        print("No user with this id in library")
+            if user.user_id == user_id:
+                for book in self.books:
+                    if book.name == book_name:
+                        self.users[user] = book_name
+                        return book
+        return None
 
     def print_all_users(self):
         for user in self.users: # iterating through class object because class obj is key
