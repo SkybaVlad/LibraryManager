@@ -28,4 +28,11 @@ class TestManager(unittest.TestCase):
     def test_add_user(self):
         m = Manager()
         user_obj = User("John",3)
+        m.add_user(user_obj.name,user_obj.user_id)
         self.assertIn(user_obj,m.users)
+
+    def test_add_user_value(self):
+        m = Manager()
+        user_obj = User("John",3)
+        m.add_user(user_obj.name,user_obj.user_id)
+        self.assertEqual(m.users[user_obj],None)
