@@ -11,18 +11,17 @@ class TestManager(unittest.TestCase):
 
     def test_add_book(self):
         m = Manager()
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
         added_book = m.books[0]
         self.assertEqual(added_book.name,book_obj.name)
-        self.assertEqual(added_book.quantity,book_obj.quantity)
 
     def test_add_two_dublicate(self):
         m = Manager()
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
         self.assertEqual(len(m.books),1)
 
     def test_add_user(self):
@@ -39,16 +38,15 @@ class TestManager(unittest.TestCase):
 
     def test_search_book(self):
         m = Manager()
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
         result = m.search_book("HarryPotter")
         self.assertEqual(result.name,book_obj.name)
-        self.assertEqual(result.quantity,book_obj.quantity)
 
     def test_search_no_exist_book(self):
         m = Manager()
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
         result = m.search_book("Ping")
         self.assertEqual(None,None)
 
@@ -56,7 +54,10 @@ class TestManager(unittest.TestCase):
         m = Manager()
         user_obj = User("John",3)
         m.add_user(user_obj.name,user_obj.user_id)
-        book_obj = Book("HarryPotter",1)
-        m.add_book(book_obj.name,book_obj.quantity)
+        book_obj = Book("HarryPotter")
+        m.add_book(book_obj.name)
         m.borrow_book(user_obj.user_id,book_obj.name)
         self.assertEqual(m.users[user_obj],book_obj.name)
+
+if __name__ == '__main__':
+    unittest.main()
