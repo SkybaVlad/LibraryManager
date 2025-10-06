@@ -66,5 +66,20 @@ def get_all_users():
         print(cursor.fetchall())
 
 
+def search_book(book_name):
+    with Database('library_db') as cursor:
+        query = 'SELECT * FROM books WHERE books.book_name = %s'
+        cursor.execute(query, (book_name,))
+        print(cursor.fetchall())
+
+
+def insert_user(user_obj):
+    with Database('library_db') as cursor:
+        query = 'INSERT INTO users (user_name,user_password, user_email) VALUES (%s, %s, %s)'
+        cursor.execute(
+            query, (user_obj.user_name, user_obj.user_password, user_obj.user_email)
+        )
+
+
 if __name__ == '__main__':
     get_all_authors()
