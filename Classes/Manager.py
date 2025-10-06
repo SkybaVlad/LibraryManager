@@ -1,37 +1,22 @@
 from Classes.Book import *
 from Classes.User import *
+from sql.sql_query import *
 
 
 class Manager:
     def __init__(self):
-        self.books = []  # for books
-        self.users = {}  # user object as a key
+        pass
 
-    def add_book(self, book_name):
-        for book in self.books:
-            if book.name == book_name:
-                return "Book with this name already exist in library, quantity changed"
-        book_obj = Book(book_name)
-        self.books.append(book_obj)
-        return None
+    def add_book(self, book_obj):
+        insert_book(book_obj.book_name)
 
-    def add_user(self, user_name, user_id):
-        for user in self.users:
-            if user.user_id == user_id:
-                return "User with this id already exist in library"
-        else:
-            user_object = User(user_name, user_id)
-            self.users[user_object] = self.users.get(user_object)
-        return None
+    def add_user(self, user_obj):
+        insert_user(user_obj)
 
-    def search_book(self, book_name):
-        for book in self.books:
-            if book.name == book_name:
-                return book
-        print("No book with this name in library")
-        return None
+    def search_book(self, book_obj):
+        search_book(book_obj.book_name)
 
-    def borrow_book(self, user_id, book_name):
+    def borrow_book(self, user_obj, book_obj):
         for user in self.users:
             if user.user_id == user_id:
                 for book in self.books:
@@ -41,11 +26,7 @@ class Manager:
         return None
 
     def print_all_users(self):
-        for (
-            user
-        ) in self.users:  # iterating through class object because class obj is key
-            print(f"{user.name} {user.user_id}")
+        get_all_users()
 
     def print_all_books(self):
-        for index, book in enumerate(self.books):
-            print(f"{index+1}. {book.name}")
+        pass
