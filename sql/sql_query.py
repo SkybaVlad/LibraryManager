@@ -27,27 +27,23 @@ class Database:
         self.connection.close()
 
 
-def get_all_books():
+def insert_user(user_obj):
     with Database('library_db') as cursor:
-        query = 'SELECT book_name ' 'FROM books'
-        cursor.execute(query)
-        print(cursor.fetchall())
+        query = 'INSERT INTO users (user_name,user_password, user_email) VALUES (%s, %s, %s)'
+        cursor.execute(
+            query, (user_obj.user_name, user_obj.user_password, user_obj.user_email)
+        )
 
 
 def insert_book(book_name):
     with Database('library_db') as cursor:
-        query = 'INSERT INTO books (book_name) VALUES (%s)'
+        query = 'INSERT INTO books (books_name) VALUES (%s)'
         cursor.execute(query, book_name)
 
 
-def get_author_book():
+def get_all_books():
     with Database('library_db') as cursor:
-        query = (
-            'SELECT author.first_name, author.last_name, books.book_name '
-            'FROM author '
-            'INNER JOIN books '
-            'ON author.author_id = books.author_id'
-        )
+        query = 'SELECT book_name ' 'FROM books'
         cursor.execute(query)
         print(cursor.fetchall())
 
@@ -66,6 +62,18 @@ def get_all_users():
         print(cursor.fetchall())
 
 
+def get_author_book():
+    with Database('library_db') as cursor:
+        query = (
+            'SELECT author.first_name, author.last_name, books.book_name '
+            'FROM author '
+            'INNER JOIN books '
+            'ON author.author_id = books.author_id'
+        )
+        cursor.execute(query)
+        print(cursor.fetchall())
+
+
 def search_book(book_name):
     with Database('library_db') as cursor:
         query = 'SELECT * FROM books WHERE books.book_name = %s'
@@ -73,12 +81,18 @@ def search_book(book_name):
         print(cursor.fetchall())
 
 
-def insert_user(user_obj):
+def borrow_book(user_obj, book_obj):
     with Database('library_db') as cursor:
-        query = 'INSERT INTO users (user_name,user_password, user_email) VALUES (%s, %s, %s)'
-        cursor.execute(
-            query, (user_obj.user_name, user_obj.user_password, user_obj.user_email)
-        )
+        query1 = 'SELECT book_id FROM books WHERE book_name = %s'
+        cursor.execute(query1, (book_obj.book_name,))
+        book_id = cursor.fetchone()
+        # add checking
+        query2 = 'SELECT user_id FROM users WHERE user_name = %s AND user_email = %s'
+        cursor.execute(query2, (user_obj.user_name, user_obj.user_email))
+        user_id = cursor.fetchone()
+        # checking
+        query3 = 'INSERT INTO loans (book_id,user_id) VALUES (%s, %s)'
+        cursor.execute(query3, (book_id, user_id))
 
 
 if __name__ == '__main__':
