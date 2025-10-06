@@ -14,7 +14,7 @@ class Manager:
         insert_user(user_obj)
 
     def search_book(self, book_obj):
-        search_book(book_obj.book_name)
+        search_book(book_obj.name)
 
     def borrow_book(self, user_obj, book_obj):
         borrow_book(user_obj, book_obj)

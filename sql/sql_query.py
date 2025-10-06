@@ -30,9 +30,7 @@ class Database:
 def insert_user(user_obj):
     with Database('library_db') as cursor:
         query = 'INSERT INTO users (user_name,user_password, user_email) VALUES (%s, %s, %s)'
-        cursor.execute(
-            query, (user_obj.user_name, user_obj.user_password, user_obj.user_email)
-        )
+        cursor.execute(query, (user_obj.name, user_obj.password, user_obj.email))
 
 
 def insert_book(book_name):
@@ -84,11 +82,11 @@ def search_book(book_name):
 def borrow_book(user_obj, book_obj):
     with Database('library_db') as cursor:
         query1 = 'SELECT book_id FROM books WHERE book_name = %s'
-        cursor.execute(query1, (book_obj.book_name,))
+        cursor.execute(query1, (book_obj.name,))
         book_id = cursor.fetchone()
         # add checking
         query2 = 'SELECT user_id FROM users WHERE user_name = %s AND user_email = %s'
-        cursor.execute(query2, (user_obj.user_name, user_obj.user_email))
+        cursor.execute(query2, (user_obj.name, user_obj.email))
         user_id = cursor.fetchone()
         # checking
         query3 = 'INSERT INTO loans (book_id,user_id) VALUES (%s, %s)'
